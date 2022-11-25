@@ -5,7 +5,7 @@ import Alert from 'react-bootstrap/Alert';
 import { CiSearch } from 'react-icons/ci';
 import { BiEditAlt } from 'react-icons/bi';
 import { MdDeleteOutline } from 'react-icons/md';
-import Toast from 'react-bootstrap/Toast';
+
 import Modal from 'react-bootstrap/Modal';
 import { Button } from 'react-bootstrap';
 import { AiOutlineUserAdd } from 'react-icons/ai';
@@ -257,7 +257,7 @@ const Component = () => {
     // Defining a state named rows
     // which we can update by calling on setRows function
     const [rows, setRows] = useState([
-        { id: 1, firstname: "", lastname: "", city: "" },
+        { id: 1, firstname: "", lastname: "", companyName: "" , email:"" ,city:"" },
     ]);
 
     // Initial states
@@ -279,8 +279,8 @@ const Component = () => {
         setRows([
             ...rows,
             {
-                id: rows.length + 1, firstname: "",
-                lastname: "", city: ""
+                id: rows.length + 8, firstname: "",
+                lastname: "", city:"" ,companyName: "" , email:"" 
             },
         ]);
         setEdit(true);
@@ -334,22 +334,27 @@ const Component = () => {
     };
 
 
+
+    const [data, setAlert]=useState({
+        data: 'Const data Cannot be deleted'
+    });
    
+    
 
     return (
         <div>
 
             <div margin={1}>
-                <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <div className='top-button' style={{ display: "flex", justifyContent: "space-between"}}>
                     <div>
                         {isEdit ? (
-                            <div>
+                            <div className='main-btn'>
                                 <Button onClick={handleAdd}>
                                     <AiOutlineUserAdd onClick={handleAdd} />
                                     ADD
                                 </Button>
                                 {rows.length !== 0 && (
-                                    <div>
+                                    <div className='d-flex '>
                                         {disable ? (
                                             <Button disabled align="right" onClick={handleSave}>
 
@@ -365,7 +370,7 @@ const Component = () => {
                                 )}
                             </div>
                         ) : (
-                            <div>
+                            <div className='main-btn'>
                                 <Button onClick={handleAdd}>
                                     <AiOutlineUserAdd onClick={handleAdd} />
                                     ADD
@@ -409,9 +414,9 @@ const Component = () => {
                                     <td>{cells.address.city}</td>
                                     <td>
                                     <div className='btn-grp'>
-                                        <button type="">Details</button>
-                                        <button type="">Edit</button>
-                                        <button type="button" >Delete</button>
+                                        <button type=""><MdDeleteOutline/><CiSearch/> Details</button>
+                                        
+                                        <button type="button" onClick={()=>alert('Const Data Cannot Be deleted! Please add new Friend')}><MdDeleteOutline/> Delete</button>
                                     </div>
                                     </td>
                                 </tr>
@@ -424,7 +429,14 @@ const Component = () => {
                                 <>
                                     <tr>
                                         {isEdit ? (
-                                            <tr>
+                                            <>
+                                                <td padding="none">
+                                                    <input
+                                                        value={row.id}
+                                                        name="id"
+                                                        onChange={(e) => handleInputChange(e, i)}
+                                                    />
+                                                </td>
                                                 <td padding="none">
                                                     <input
                                                         value={row.firstname}
@@ -440,47 +452,86 @@ const Component = () => {
                                                     />
                                                 </td>
                                                 <td padding="none">
-                                                    <select
-                                                        style={{ width: "100px" }}
-                                                        name="city"
-                                                        value={row.city}
+                                                    <input
+                                                        value={row.companyName}
+                                                        name="companyName"
                                                         onChange={(e) => handleInputChange(e, i)}
-                                                    >
-                                                        <option value=""></option>
-                                                        <option value="Karanja">Karanja</option>
-                                                        <option value="Hingoli">Hingoli</option>
-                                                        <option value="Bhandara">Bhandara</option>
-                                                        <option value="Amaravati">Amaravati</option>
-                                                        <option value="Pulgaon">Pulgaon</option>
-                                                    </select>
+                                                    />
                                                 </td>
-                                            </tr>
+                                                <td padding="none">
+                                                    <input
+                                                        type='email'
+                                                        value={row.email}
+                                                        name="email"
+                                                        onChange={(e) => handleInputChange(e, i)}
+                                                    />
+                                                </td>
+                                                <td padding="none">
+                                                <input
+                                                        value={row.city}
+                                                        name="city"
+                                                        onChange={(e) => handleInputChange(e, i)}
+                                                    />
+                                                </td>
+                                            </>
                                         ) : (
-                                            <div>
-                                                <td component="th" scope="row">
-                                                    {row.firstname}
+                                            <>
+                                                <td padding="none">
+                                                    <input
+                                                        value={row.id}
+                                                        name="id"
+                                                        onChange={(e) => handleInputChange(e, i)}
+                                                    />
                                                 </td>
-                                                <td component="th" scope="row">
-                                                    {row.lastname}
+                                                <td padding="none">
+                                                    <input
+                                                        value={row.firstname}
+                                                        name="firstname"
+                                                        onChange={(e) => handleInputChange(e, i)}
+                                                    />
                                                 </td>
-                                                <td component="th" scope="row" align="center">
-                                                    {row.city}
+                                                <td padding="none">
+                                                    <input
+                                                        value={row.lastname}
+                                                        name="lastname"
+                                                        onChange={(e) => handleInputChange(e, i)}
+                                                    />
                                                 </td>
-                                                <td
-                                                    component="th"
-                                                    scope="row"
-                                                    align="center"
-                                                ></td>
-                                            </div>
+                                                <td padding="none">
+                                                    <input
+                                                        value={row.companyName}
+                                                        name="companyName"
+                                                        onChange={(e) => handleInputChange(e, i)}
+                                                    />
+                                                </td>
+                                                <td padding="none">
+                                                    <input
+                                                        type='email'
+                                                        value={row.email}
+                                                        name="email"
+                                                        onChange={(e) => handleInputChange(e, i)}
+                                                    />
+                                                </td>
+                                                <td padding="none">
+                                                <input
+                                                        value={row.city}
+                                                        name="city"
+                                                        onChange={(e) => handleInputChange(e, i)}
+                                                    />
+                                                </td>
+                                            </>
                                         )}
                                         {isEdit ? (
-                                            <Button className="mr10" onClick={handleConfirm}>
-                                                <MdDeleteOutline />
-                                            </Button>
+                                            <button className='delet-btn' onClick={handleConfirm}>
+                                            <MdDeleteOutline /> Delete
+                                        </button>
+
+                                        
+
                                         ) : (
-                                            <Button className="mr10" onClick={handleConfirm}>
-                                                <MdDeleteOutline />
-                                            </Button>
+                                            <button className='delet-btn' onClick={handleConfirm}>
+                                                <MdDeleteOutline /> Delete
+                                            </button>
                                         )}
                                         {showConfirm && (
                                             <div>
@@ -500,6 +551,7 @@ const Component = () => {
                                                     </Modal.Body>
                                                     <Modal.Footer>
                                                         <Button
+                                                        className='yes'
                                                             onClick={() => handleRemoveClick(i)}
                                                             color="primary"
                                                             autoFocus
@@ -507,6 +559,7 @@ const Component = () => {
                                                             Yes
                                                         </Button>
                                                         <Button
+                                                         className='no'
                                                             onClick={handleNo}
                                                             color="primary"
                                                             autoFocus
